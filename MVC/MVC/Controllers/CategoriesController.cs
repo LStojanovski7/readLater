@@ -12,6 +12,7 @@ using ReadLater.Services;
 
 namespace MVC.Controllers
 {
+    [Authorize]
     public class CategoriesController : Controller
     {
         ICategoryService _categoryService;

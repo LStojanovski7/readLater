@@ -5,11 +5,12 @@ using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity.EntityFramework;
 using ReadLater.Entities;
 
 namespace ReadLater.Data
 {
-    public class ReadLaterDataContext : DbContext, IDbContext
+    public class ReadLaterDataContext : IdentityDbContext<ApplicationUser>, IDbContext
     {
         static ReadLaterDataContext()
         {
@@ -17,7 +18,7 @@ namespace ReadLater.Data
         }
 
         public ReadLaterDataContext()
-            : base("Name=ReadLaterDataContext")
+            : base("Name=ReadLaterDataContext", throwIfV1Schema: false)
         {
         }
 
@@ -36,8 +37,11 @@ namespace ReadLater.Data
         {
             EntityTypeConfiguration<Category> categoryMap = modelBuilder.Entity<Category>();
             EntityTypeConfiguration<Bookmark> bookmarkMap = modelBuilder.Entity<Bookmark>();
+
+            base.OnModelCreating(modelBuilder);
         }
 
         public System.Data.Entity.DbSet<ReadLater.Entities.Category> Categories { get; set; }
+        public System.Data.Entity.DbSet<ReadLater.Entities.Bookmark> Bookmarks { get; set; }
     }
 }
